@@ -5,6 +5,8 @@ import * as Rx from 'rxjs/Rx';
 import { BillService } from '../bill.service';
 import { PartService } from '../part.service';
 import { CafeTable } from '../cafe-table';
+import { Bill } from '../bill';
+import { Waiter } from '../waiter';
 import { showLoading, hideLoading, doNothing } from '../commons'
 
 
@@ -16,8 +18,16 @@ import { showLoading, hideLoading, doNothing } from '../commons'
 export class CafePlanComponent implements OnInit {
 
     tables: CafeTable[] = [];
+    bill: Bill;
+    currentCafeTable: CafeTable;
+    currentWaiter: Waiter;
+    errorMessage: string;
 
-    constructor(private billService: BillService, private partService: PartService, private router: Router) { }
+    constructor(private billService: BillService, private partService: PartService, private router: Router) {
+        this.currentCafeTable = <CafeTable>{};
+        this.currentWaiter = <Waiter>{};
+        this.bill = <Bill>{};
+    }
 
     ngOnInit() {
         let observable: Rx.Observable<any> = this.fetchPage();
