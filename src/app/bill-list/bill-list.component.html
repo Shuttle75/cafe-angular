@@ -1,0 +1,65 @@
+<ng-template [ngIf]="billPage != null">
+
+  <div id="list" class="row">
+
+    <div class="table-responsive col-md-12">
+      <table class="table table-striped" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Стол'" [property]="'cafeTable'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Официант'" [property]="'waiter'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Открыт'" [property]="'openDate'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Закрыт'" [property]="'closeDate'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Кол. человек'" [property]="'persons'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Скидка %'" [property]="'discountPercent'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Скидка сумма'" [property]="'discountAmount'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Сумма по счету'" [property]="'orderAmount'" ></app-table-sort></th>
+          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Сумма к оплате'" [property]="'billAmount'" ></app-table-sort></th>
+          <th class="actions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let bill of billPage.content">
+          <td>{{bill.cafeTable.name}}</td>
+          <td>{{bill.waiter.lastName}} {{bill.waiter.firstName}}</td>
+          <td>{{bill.openDate}}</td>
+          <td>{{bill.closeDate}}</td>
+          <td>{{bill.persons}}</td>
+          <td>{{bill.discountPercent}}</td>
+          <td>{{bill.discountAmount}}</td>
+          <td>{{bill.billAmount}}</td>
+          <td>{{bill.wholeAmount}}</td>
+          <td class="actions">
+            <a class="btn btn-success btn-xs" (click)="goToDetails(bill)">Details</a>
+            <a class="btn btn-danger btn-xs" (click)="currentBill=bill" data-toggle="modal" data-target="#delete-modal">Delete</a>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+  </div> <!-- /#list -->
+
+  <app-table-pagination [table]="self" [page]="billPage"></app-table-pagination>
+
+  <!-- Modal -->
+  <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="modalLabel">Delete bill</h4>
+        </div>
+        <div class="modal-body">
+          Do you want to remove this item ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" (click)="delete(currentBill)" class="btn btn-primary" data-dismiss="modal">Yes</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ng-template>
