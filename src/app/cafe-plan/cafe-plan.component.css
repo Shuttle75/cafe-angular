@@ -1,0 +1,101 @@
+div {
+    background: #ccc;
+    padding: 5px;
+    border: solid 1px black;
+    position: absolute;
+    font-size: 400%;
+    display: flex;
+    justify-content: center; /*Центрирование по горизонтали*/
+    align-items: center;     /*Центрирование по вертикали */
+}
+
+.bar {
+    left: 220px;
+    top: 80px;
+    width:360px;
+    height: 280px;
+}
+
+.cafe-table1 {
+    left: 20px;
+    top: 80px;
+    width: 80px;
+    height: 120px;
+}
+
+.cafe-table2 {
+    left: 20px;
+    top: 240px;
+    width: 80px;
+    height: 120px;
+}
+
+.cafe-table3 {
+    left: 20px;
+    top: 400px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table4 {
+    left: 180px;
+    top: 400px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table5 {
+    left: 340px;
+    top: 400px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table6 {
+    left: 500px;
+    top: 400px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table7 {
+    left: 60px;
+    top: 560px;
+    width: 80px;
+    height: 120px;
+}
+
+.cafe-table8 {
+    left: 180px;
+    top: 520px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table9 {
+    left: 340px;
+    top: 520px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table10 {
+    left: 500px;
+    top: 560px;
+    width: 80px;
+    height: 120px;
+}
+
+.cafe-table11 {
+    left: 340px;
+    top: 640px;
+    width: 120px;
+    height: 80px;
+}
+
+.cafe-table12 {
+    left: 180px;
+    top: 640px;
+    width: 120px;
+    height: 80px;
+}
