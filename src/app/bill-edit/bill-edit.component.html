@@ -1,0 +1,88 @@
+<div class="container-fluid">
+  <div class="container xd-container">
+    <h2></h2>
+    <form #billForm="ngForm" class="form-horizontal">
+      <div class="col-md-4">
+        <button class="btn btn-primary btn-lg" type="button" (click)="showMenuGroups()">Меню</button>
+      </div>
+      <label for="cafeTable" class="col-md-1 control-label">Стол</label>
+      <div class="col-md-1">
+        <input type="text" class="form-control" id="cafeTable" [ngModel]="bill.cafeTable.name" name="cafeTable" #cafeTable="ngModel"/>
+      </div>
+      <label for="waiter" class="col-md-1 control-label">Официант</label>
+      <div class="col-md-3">
+        <input type="text" class="form-control" id="waiter" [ngModel]="bill.waiter.lastName + ' ' + bill.waiter.firstName" name="waiter" #waiter="ngModel"/>
+      </div>
+      <label for="persons" class="col-md-1 control-label">Persons</label>
+      <div class="col-md-1">
+        <input type="text" class="form-control" id="persons" [(ngModel)]="bill.persons" name="persons" #persons="ngModel"/>
+      </div>
+    </form>
+  </div>
+  <br>
+  <div id="list" class="row">
+    <div class="table-responsive col-md-12">
+      <table class="table table-striped" cellspacing="0" cellpadding="0">
+        <thead>
+        <tr>
+          <th>Меню</th>
+          <th>Дата и время</th>
+          <th>Цена</th>
+          <th class="actions">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of billItems">
+          <td>{{item.menuItem.name}}</td>
+          <td>{{item.orderDate}}</td>
+          <td>{{item.price}}</td>
+          <td class="actions">
+            <a class="btn btn-success btn-xs" (click)="bindMenuItem(item.menuItem)">Повторить</a>
+            <a class="btn btn-danger btn-xs" (click)="currentBillItem=item" data-toggle="modal" data-target="#delete-modal">Удалить</a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+    <div class="row">
+      <div class="menu-group col-md-4">
+        <ul class="list-group">
+          <li *ngFor="let group of menuGroups" class="list-group-item" (click)="showMenuItems(group)">{{group.name}}</li>
+        </ul>
+      </div>
+      <div class="menu-item col-md-6">
+        <ul class="list-group">
+          <li *ngFor="let item of menuItems" class="list-group-item" (click)="bindMenuItem(item)">{{item.name}}
+            <span class="badge">{{item.price}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="modalLabel">Delete bill</h4>
+          </div>
+          <div class="modal-body">
+            Do you want to remove this item ?
+          </div>
+          <div class="modal-footer">
+            <button type="button" (click)="deleteBillItem(currentBillItem)" class="btn btn-primary" data-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="col-md-offset-9 col-md-3">
+    <button class="btn btn-warning" type="button" (click)="gotoBillsList()">Назад</button>
+    <button class="btn btn-success" type="button" (click)="gotoBillsList()">Заказы смена</button>
+  </div>
+
+</div>

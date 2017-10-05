@@ -1,0 +1,16 @@
+.menu-group {
+    position: absolute;
+    left: 20px;
+    top: 120px;
+    z-index: 100;
+}
+
+.menu-item {
+    position: absolute;
+    left: 480px;
+    top: 120px;
+    z-index: 100;
+}
+button {
+    z-index: 0;
+}
