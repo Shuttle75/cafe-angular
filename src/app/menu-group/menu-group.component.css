@@ -1,0 +1,19 @@
+div {
+    background: #ccc;
+    padding: 5px;
+    border: solid 1px black;
+    font-size: 200%;
+    width: 320px;
+    height: auto;
+    display: flex;
+    align-items: center;     /*Центрирование по вертикали */
+
+}
+
+.menu-group {
+    width:360px;
+}
+
+.menu-item {
+    width:480px;
+}

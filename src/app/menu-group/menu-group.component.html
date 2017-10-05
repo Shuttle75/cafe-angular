@@ -1,0 +1,13 @@
+<table>
+  <tr>
+    <td>
+      <div *ngFor="let group of menu_groups" class="menu-group" (click)="goToDetails(group)">{{group.name}}</div>
+    </td>
+    <td>
+      ddd
+    </td>
+    <td>
+      <div *ngFor="let item of menu_items" class="menu-item">{{item.name}}</div>
+    </td>
+  </tr>
+</table>
