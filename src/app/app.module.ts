@@ -22,7 +22,6 @@ const appRoutes: Routes = [
     {path: '', component: BillListComponent},
     {path: 'plan', component: CafePlanComponent},
     {path: 'bills', component: BillListComponent},
-    {path: 'bills/add/:id/cafeTable', component: BillAddComponent},
     {path: 'bills/:id', component: BillEditComponent, resolve: {bill: BillService}}
 ];
 
@@ -39,6 +38,7 @@ const appRoutes: Routes = [
         BillEditComponent,
         TablePaginationComponent,
         TableSortComponent,
+        CafePlanComponent,
         MenuGroupComponent,
         MenuItemComponent
     ],
