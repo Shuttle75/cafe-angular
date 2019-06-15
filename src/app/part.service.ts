@@ -1,43 +1,47 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
+import {HttpClient} from '@angular/common/http';
 
-import * as Rx from "rxjs/Rx";
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/publish';
+import {Observable} from 'rxjs';
 
-import {CafeTable} from './cafe-table'
-import {Waiter} from './waiter'
-import {webServiceEndpoint} from './commons';
+import {CafeTable} from './cafe-table';
+import {Waiter} from './waiter';
+import {environment} from '../environments/environment';
+import {HandleError} from './error.service';
+import {catchError} from 'rxjs/operators';
 
 @Injectable()
 export class PartService {
 
-    constructor(private http: Http) {}
+  private entity_url = environment.REST_API_URL;
+  private handlerError: HandleError;
 
-    findCafeTables(): Rx.Observable<CafeTable[]> {
-        return this.http.get(`${webServiceEndpoint}/cafe-tables`)
-            .map((response: Response) => <CafeTable[]> response.json())
-            .publish().refCount();
+    constructor(private http: HttpClient) {}
+
+    findCafeTables(): Observable<CafeTable[]> {
+        return this.http.get<CafeTable[]>(this.entity_url + 'cafe-tables')
+          .pipe(
+            catchError(this.handlerError('findCafeTables', []))
+          );
     }
 
-    getCafeTable(id: number): Rx.Observable<CafeTable> {
-        return this.http.get(`${webServiceEndpoint}/cafe-tables/${id}`)
-            .map((response: Response) => <CafeTable> response.json())
-            .publish()
-            .refCount();
+    getCafeTable(id: number): Observable<CafeTable> {
+        return this.http.get<CafeTable>(this.entity_url + 'cafe-tables/' + id)
+          .pipe(
+            catchError(this.handlerError('getCafeTable', {} as CafeTable))
+          );
     }
 
-    findWaiters(): Rx.Observable<Waiter[]> {
-        return this.http.get(`${webServiceEndpoint}/waiters`)
-            .map((response: Response) => <Waiter[]> response.json())
-            .publish()
-            .refCount();
+    findWaiters(): Observable<Waiter[]> {
+        return this.http.get<Waiter[]>(this.entity_url + 'waiters')
+          .pipe(
+            catchError(this.handlerError('findWaiters', []))
+          );
     }
 
-    getWaiter(id: number): Rx.Observable<Waiter> {
-        return this.http.get(`${webServiceEndpoint}/waiters/${id}`)
-            .map((response: Response) => <Waiter> response.json())
-            .publish()
-            .refCount();
+    getWaiter(id: number): Observable<Waiter> {
+        return this.http.get<Waiter>(this.entity_url + 'waiters/' + id)
+          .pipe(
+            catchError(this.handlerError('getWaiter', {} as Waiter))
+          );
     }
 }

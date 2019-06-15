@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as Rx from 'rxjs/Rx';
-
-import { BillService } from '../bill.service';
-import { PartService } from '../part.service';
-import { CafeTable } from '../cafe-table';
-import { Bill } from '../bill';
-import { Waiter } from '../waiter';
+import {Observable} from 'rxjs';
+import { BillService} from '../bill/bill.service';
+import { PartService} from '../part.service';
+import { CafeTable} from '../cafe-table';
+import { Bill} from '../bill/bill';
+import { Waiter} from '../waiter';
 import { showLoading, hideLoading, doNothing } from '../commons'
 
 
@@ -30,13 +29,13 @@ export class CafePlanComponent implements OnInit {
     }
 
     ngOnInit() {
-        let observable: Rx.Observable<any> = this.fetchPage();
+        let observable: Observable<any> = this.fetchPage();
         showLoading();
         observable.subscribe(doNothing, hideLoading, hideLoading);
     }
 
-    fetchPage(): Rx.Observable<CafeTable[]> {
-        let observable: Rx.Observable<CafeTable[]> = this.partService.findCafeTables();
+    fetchPage(): Observable<CafeTable[]> {
+        let observable: Observable<CafeTable[]> = this.partService.findCafeTables();
         observable.subscribe(tables => this.tables = tables);
         return observable;
     }

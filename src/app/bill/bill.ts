@@ -1,6 +1,6 @@
-import { CafeTable } from './cafe-table';
-import { Waiter } from './waiter';
-import { MenuItem } from './menu';
+import { CafeTable } from '../cafe-table';
+import { Waiter } from '../waiter';
+import { MenuItem } from '../menu/menu';
 
 export interface Bill {
     id: number;

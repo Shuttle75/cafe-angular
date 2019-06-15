@@ -1,7 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-
-
 import { MenuService } from '../menu.service';
 import { MenuGroup, MenuItem } from '../menu';
 

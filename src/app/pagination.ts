@@ -1,18 +1,28 @@
-// http://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/domain/Pageable.html
+export interface PaginationPropertyPageable {
+  sort?: PaginationPropertySort;
+  pageSize?: number;
+  pageNumber?: number;
+  offset?: number;
+  paged?: boolean;
+  unpaged?: boolean;
+}
 
 export interface PaginationPropertySort {
-    direction: string;
-    property: string;
+  sorted?: boolean;
+  unsorted?: boolean;
+  empty?: boolean;
 }
 
 export interface PaginationPage<T> {
-    content? : Array<T>;
-    last?: boolean;
-    first?: boolean;
-    number: number;
-    size: number;
-    totalPages? : number;
-    itemsPerPage?: number;
-    sort?: Array<PaginationPropertySort>;
+  content?: Array<T>;
+  sort?: PaginationPropertySort;
+  totalPages?: number;
+  totalElements?: number;
+  last?: boolean;
+  first?: boolean;
+  numberOfElements?: number;
+  size: number;
+  number: number;
+  empty?: boolean;
 }
 

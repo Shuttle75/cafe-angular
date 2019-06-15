@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router, ActivatedRoute} from '@angular/router';
 
-import * as Rx from 'rxjs/Rx';
-import 'rxjs/add/operator/switchMap';
+import {Observable} from 'rxjs';
 
-import { BillService } from '../bill.service';
-import { MenuService } from '../menu.service';
+import { BillService} from '../bill.service';
+import { MenuService} from '../../menu/menu.service';
 import { Bill, BillItem } from '../bill';
-import { MenuGroup, MenuItem } from '../menu';
-import { showLoading, hideLoading, doNothing } from '../commons'
+import { MenuGroup, MenuItem } from '../../menu/menu';
+import { showLoading, hideLoading, doNothing } from '../../commons'
 
 @Component({
     selector: 'app-bill-edit',
@@ -86,15 +85,14 @@ export class BillEditComponent implements OnInit {
         );
     }
 
-    fetchBillItems(id: number): Rx.Observable<BillItem[]> {
-         let observable: Rx.Observable<BillItem[]> = this.billService.getBillItemsByBill(id);
+    fetchBillItems(id: number): Observable<BillItem[]> {
+         let observable: Observable<BillItem[]> = this.billService.getBillItemsByBill(id);
          observable.subscribe(billItems => this.billItems = billItems);
          return observable;
-        
     }
 
     deleteBillItem(billItem) {
-        let observable: Rx.Observable<BillItem> = this.billService.deleteBillItem(billItem.id);
+        let observable: Observable<{}> = this.billService.deleteBillItem(billItem.id);
         showLoading();
         observable.switchMap(() => {
             return this.fetchBillItems(billItem.bill.id);
