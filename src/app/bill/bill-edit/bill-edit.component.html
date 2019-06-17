@@ -2,20 +2,33 @@
   <div class="container xd-container">
     <h2></h2>
     <form #billForm="ngForm" class="form-horizontal">
-      <div class="col-md-4">
-        <button class="btn btn-primary btn-lg" type="button" (click)="showMenuGroups()">Меню</button>
+      <div class="row">
+        <div class="col-md-2">
+          <button class="btn btn-primary btn-lg" type="button" (click)="showMenuGroups()">Меню</button>
+        </div>
+        <label for="cafeTable" class="col-md-2 control-label">Стол</label>
+        <div class="col-md-1">
+          <input type="text" class="form-control" id="cafeTable" [ngModel]="bill.cafeTable.name" name="cafeTable" #cafeTable="ngModel"/>
+        </div>
+        <label for="waiter" class="col-md-1 control-label">Официант</label>
+        <div class="col-md-4">
+          <input type="text" class="form-control" id="waiter" [ngModel]="bill.waiter.lastName + ' ' + bill.waiter.firstName" name="waiter" #waiter="ngModel"/>
+        </div>
+        <label for="persons" class="col-md-1 control-label">Persons</label>
+        <div class="col-md-1">
+          <input type="text" class="form-control" id="persons" [(ngModel)]="bill.persons" name="persons" #persons="ngModel"/>
+        </div>
       </div>
-      <label for="cafeTable" class="col-md-1 control-label">Стол</label>
-      <div class="col-md-1">
-        <input type="text" class="form-control" id="cafeTable" [ngModel]="bill.cafeTable.name" name="cafeTable" #cafeTable="ngModel"/>
-      </div>
-      <label for="waiter" class="col-md-1 control-label">Официант</label>
-      <div class="col-md-3">
-        <input type="text" class="form-control" id="waiter" [ngModel]="bill.waiter.lastName + ' ' + bill.waiter.firstName" name="waiter" #waiter="ngModel"/>
-      </div>
-      <label for="persons" class="col-md-1 control-label">Persons</label>
-      <div class="col-md-1">
-        <input type="text" class="form-control" id="persons" [(ngModel)]="bill.persons" name="persons" #persons="ngModel"/>
+      <div class="row">
+        <div class="col-md-2"></div>
+        <label for="openDate" class="col-md-2 control-label">Дата открытия</label>
+        <div class="col-md-3">
+          <input id="openDate" name="openDate" type="text" class="form-control" [(ngModel)]="bill.openDate" #openDate="ngModel"/>
+        </div>
+        <label for="closeDate" class="col-md-2 control-label">Дата закрытия</label>
+        <div class="col-md-3">
+          <input id="closeDate" name="closeDate" type="text" class="form-control" [(ngModel)]="bill.closeDate" #closeDate="ngModel"/>
+        </div>
       </div>
     </form>
   </div>

@@ -10,42 +10,42 @@ import {catchError} from 'rxjs/operators';
 export class MenuService {
 
   private entity_url = environment.REST_API_URL;
-  private handlerError: HandleError;
+  private handleError: HandleError;
 
     constructor(private http: HttpClient) {}
 
     getMenuGroups(): Observable<MenuGroup[]> {
         return this.http.get<MenuGroup[]>(this.entity_url + 'menu-groups')
           .pipe(
-            catchError(this.handlerError('getMenuGroups', []))
+            catchError(err =>  this.handleError(err))
           );
     }
 
     getMenuGroupById(id: number): Observable<MenuGroup> {
         return this.http.get<MenuGroup>(this.entity_url + 'menu-groups/${id}')
           .pipe(
-            catchError(this.handlerError('getMenuGroupById', {} as MenuGroup))
+            catchError(err =>  this.handleError(err))
           );
     }
 
     getMenuItems(): Observable<MenuItem[]> {
         return this.http.get<MenuItem[]>(this.entity_url + 'menu-items')
           .pipe(
-            catchError(this.handlerError('getMenuItems', []))
+            catchError(err =>  this.handleError(err))
           );
     }
 
     getMenuItemsByMenuGroup(id: number): Observable<MenuItem[]> {
-        return this.http.get<MenuItem[]>(this.entity_url + 'menu-items/${id}/menu-group')
+        return this.http.get<MenuItem[]>(this.entity_url + 'menu-items/' + id + '/menu-group')
           .pipe(
-            catchError(this.handlerError('addOwner', []))
+            catchError(err =>  this.handleError(err))
           );
     }
 
     getMenuItemsById(id: number): Observable<MenuItem> {
         return this.http.get<MenuItem>(this.entity_url + 'menu-items/' + id)
           .pipe(
-            catchError(this.handlerError('addOwner', {} as MenuItem))
+            catchError(err =>  this.handleError(err))
           );
     }
 

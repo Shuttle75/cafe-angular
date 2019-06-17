@@ -1,8 +1,5 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router, ActivatedRoute} from '@angular/router';
-
-import {Observable} from 'rxjs';
-
 import { BillService} from '../bill.service';
 import { MenuService} from '../../menu/menu.service';
 import { Bill, BillItem } from '../bill';
@@ -21,7 +18,7 @@ export class BillEditComponent implements OnInit {
     menuItems: MenuItem[];
 
     currentMenuItem: MenuItem;
-    currentBillItem: BillItem;
+    @Input() currentBillItem: BillItem;
 
     errorMessage: string;
 
@@ -33,7 +30,6 @@ export class BillEditComponent implements OnInit {
     }
     
     ngOnInit() {
-
         this.billService.getBillItemsByBill(this.bill.id)
             .subscribe(
                 response => this.billItems = response,
@@ -85,20 +81,21 @@ export class BillEditComponent implements OnInit {
         );
     }
 
-    fetchBillItems(id: number): Observable<BillItem[]> {
-         let observable: Observable<BillItem[]> = this.billService.getBillItemsByBill(id);
-         observable.subscribe(billItems => this.billItems = billItems);
-         return observable;
+    fetchBillItems(id: number) {
+         this.billService.getBillItemsByBill(id)
+           .subscribe(billItems => this.billItems = billItems);
     }
 
     deleteBillItem(billItem) {
-        let observable: Observable<{}> = this.billService.deleteBillItem(billItem.id);
-        showLoading();
-        observable.switchMap(() => {
-            return this.fetchBillItems(billItem.bill.id);
-        }).subscribe(doNothing, hideLoading, hideLoading);
+        this.billService.deleteBillItem(billItem.id.toString()).subscribe(
+          response => {
+            this.billService.getBillItemsByBill(this.bill.id).subscribe(
+                respbillItems => this.billItems = respbillItems,
+                error => this.errorMessage = <any> error
+              );
+          },
+          error => this.errorMessage = <any> error);
     }
-
 
     gotoBillsList() {
         this.router.navigate(['/plan']);

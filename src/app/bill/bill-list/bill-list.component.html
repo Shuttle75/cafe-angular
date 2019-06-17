@@ -1,65 +1,83 @@
-<ng-template [ngIf]="billPage != null">
+<table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData()" class="mat-elevation-z8">
 
-  <div id="list" class="row">
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Перегляд </th>
+    <td mat-cell *matCellDef="let element"><a class="btn btn-success btn-xs" (click)="goToDetails(element)"> Перегляд </a></td>
+  </ng-container>
 
-    <div class="table-responsive col-md-12">
-      <table class="table table-striped" cellspacing="0" cellpadding="0">
-        <thead>
-        <tr>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Стол'" [property]="'cafeTable'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Официант'" [property]="'waiter'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Открыт'" [property]="'openDate'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Закрыт'" [property]="'closeDate'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Кол. человек'" [property]="'persons'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Скидка %'" [property]="'discountPercent'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Скидка сумма'" [property]="'discountAmount'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Сумма по счету'" [property]="'orderAmount'" ></app-table-sort></th>
-          <th><app-table-sort [table]="self" [page]="billPage" [label]="'Сумма к оплате'" [property]="'billAmount'" ></app-table-sort></th>
-          <th class="actions">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let bill of billPage.content">
-          <td>{{bill.cafeTable.name}}</td>
-          <td>{{bill.waiter.lastName}} {{bill.waiter.firstName}}</td>
-          <td>{{bill.openDate}}</td>
-          <td>{{bill.closeDate}}</td>
-          <td>{{bill.persons}}</td>
-          <td>{{bill.discountPercent}}</td>
-          <td>{{bill.discountAmount}}</td>
-          <td>{{bill.billAmount}}</td>
-          <td>{{bill.wholeAmount}}</td>
-          <td class="actions">
-            <a class="btn btn-success btn-xs" (click)="goToDetails(bill)">Details</a>
-            <a class="btn btn-danger btn-xs" (click)="currentBill=bill" data-toggle="modal" data-target="#delete-modal">Delete</a>
-          </td>
-        </tr>
+  <ng-container matColumnDef="cafeTable">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Стол </th>
+    <td mat-cell *matCellDef="let element"><a (click)="goToDetails(element)"> {{element.cafeTable.name}} </a></td>
+  </ng-container>
 
-        </tbody>
-      </table>
-    </div>
+  <ng-container matColumnDef="waiter">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Официант </th>
+    <td mat-cell *matCellDef="let element"> {{element.waiter.lastName}} {{element.waiter.firstName}} </td>
+  </ng-container>
 
-  </div> <!-- /#list -->
+  <ng-container matColumnDef="openDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Открыт </th>
+    <td mat-cell *matCellDef="let element"> {{element.openDate}} </td>
+  </ng-container>
 
-  <app-table-pagination [table]="self" [page]="billPage"></app-table-pagination>
+  <ng-container matColumnDef="closeDate">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Закрыт </th>
+    <td mat-cell *matCellDef="let element"> {{element.closeDate}} </td>
+  </ng-container>
 
-  <!-- Modal -->
-  <div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" id="modalLabel">Delete bill</h4>
-        </div>
-        <div class="modal-body">
-          Do you want to remove this item ?
-        </div>
-        <div class="modal-footer">
-          <button type="button" (click)="delete(currentBill)" class="btn btn-primary" data-dismiss="modal">Yes</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
-        </div>
+  <ng-container matColumnDef="persons">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Кол. человек </th>
+    <td mat-cell *matCellDef="let element"> {{element.persons}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="discountPercent">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Скидка % </th>
+    <td mat-cell *matCellDef="let element"> {{element.discountPercent}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="discountAmount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Скидка сумма </th>
+    <td mat-cell *matCellDef="let element"> {{element.discountAmount}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="billAmount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Сумма по счету </th>
+    <td mat-cell *matCellDef="let element"> {{element.billAmount}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="wholeAmount">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Сумма к оплате </th>
+    <td mat-cell *matCellDef="let element"> {{element.wholeAmount}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator
+  [length]="length"
+  [pageSize]="pageSize"
+  [pageIndex]="pageIndex"
+  [pageSizeOptions]="pageSizeOptions"
+  (page)="doPageEvent($event)"
+  [showFirstLastButtons]="true">
+</mat-paginator>
+
+<!-- Modal -->
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="modalLabel">Delete bill</h4>
+      </div>
+      <div class="modal-body">
+        Do you want to remove this item ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="delete(currentBill)" class="btn btn-primary" data-dismiss="modal">Yes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal" data-dismiss="modal">No</button>
       </div>
     </div>
   </div>
-
-</ng-template>
+</div>
